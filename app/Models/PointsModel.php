@@ -9,5 +9,5 @@ class PointsModel extends Model
     protected $table = 'points';
 
     protected $guarded = ['id'];
-    
+
 }

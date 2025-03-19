@@ -20,6 +20,7 @@
 
     @yield('scripts')
 
+    @include('componen.toast')
 </body>
 
 </html>

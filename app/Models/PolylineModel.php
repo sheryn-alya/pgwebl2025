@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PolylineModel extends Model
 {
-    protected $table = 'polyline';
+    protected $table = 'polylines';
 
     protected $guarded = ['id'];
 }

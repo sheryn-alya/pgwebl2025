@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('polygon', function (Blueprint $table) {
+        Schema::create('polygons', function (Blueprint $table) {
             $table->id();
             $table->geometry('geom');
             $table->string('name');
             $table->text('description');
-            $table->string('image')->nullable;
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('polygon');
+        Schema::dropIfExists('polygons');
     }
 };
