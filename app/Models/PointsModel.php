@@ -11,10 +11,11 @@ class PointsModel extends Model
 
     protected $guarded = ['id'];
 
-    public function gejson_points()
+    public function geojson_points()
     {
         $points = $this
-        ->select(DB::raw('id, ST_AsGeoJSON(geom) as geom, name, description, created_at,updated_at'))->get(); // Menggunakan raw query untuk mengambil data geometri dalam format GeoJSON
+            ->select(DB::raw('id, ST_AsGeoJSON(geom) as geom, name,
+        description, image, created_at,updated_at'))->get(); // Menggunakan raw query untuk mengambil data geometri dalam format GeoJSON
 
         //return $points;
 
@@ -31,12 +32,13 @@ class PointsModel extends Model
                     'id' => $p->id,
                     'name' => $p->name,
                     'description' => $p->description,
+                    'image' => $p->image,
                     'created_at' => $p->created_at,
                     'updated_at' => $p->updated_at
                 ],
             ];
             array_push($geojson['features'], $feature);
-    }
+        }
 
         return $geojson;
     }
