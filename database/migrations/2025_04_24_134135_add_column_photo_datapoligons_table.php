@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('polygon', function (Blueprint $table) {
+        Schema::table('polygons', function (Blueprint $table) {
             $table->string('photo')->nullable();
+            $table->string('lainnya')->nullable();
         });
     }
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('polylines', function (Blueprint $table) {
             $table->string('photo')->nullable();
+            $table->string('lainnya')->nullable();
         });
     }
 
