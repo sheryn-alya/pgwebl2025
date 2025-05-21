@@ -7,61 +7,29 @@
             <table class="table table-striped table-hover table-bordered">
                 <thead class="table-dark text-center">
                     <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>NIM</th>
-                        <th>Kelas</th>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>description</th>
+                        <th>image</th>
+                        <th>created_at</th>
+                        <th>updated_at</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
+                    @foreach ($points as $p)
                     <tr>
-                        <td>1</td>
-                        <td>Zidni kesatu</td>
-                        <td>111</td>
-                        <td>A</td>
+                        <td>{{ $p->id }}</td>
+                        <td>{{ $p->name }}</td>
+                        <td>{{ $p->description }}</td>
+                        <td>
+                            <img src="{{ asset('storage/images/' . $p->image) }}" alt=""
+                            width="200" title="{{ $p->image }}">
+                        </td>
+                        <td>{{ $p->created_at }}</td>
+                        <td>{{ $p->updated_at }}</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Zidni kedua</td>
-                        <td>112</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Bukan Zidni hehe</td>
-                        <td>1113</td>
-                        <td>B</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Ini Zidni</td>
-                        <td>114</td>
-                        <td>B</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>ZIZIZI</td>
-                        <td>1113</td>
-                        <td>B</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Yah begini Zidni</td>
-                        <td>116</td>
-                        <td>C</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Zidni deh</td>
-                        <td>117</td>
-                        <td>C</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Selamat Tinggal Zidni</td>
-                        <td>118</td>
-                        <td>A</td>
-                    </tr>
+
+                    @endforeach
                 </tbody>
             </table>
         </div>

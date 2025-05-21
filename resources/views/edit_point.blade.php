@@ -24,9 +24,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form method="POST" action="{{ route('points.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('points.update', $id) }}" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
+                        @method('PATCH')
+
+                        <input type="hidden" name="id" id="point-id"> <!-- Tambahan penting -->
 
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
@@ -48,8 +51,7 @@
                             <label for="image" class="form-label">Photo</label>
                             <input type="file" class="form-control" id="image_point" name="image"
                                 onchange="document.getElementById('preview-image-point').src = window.URL.createObjectURL(this.files[0])">
-                            <img src="" alt="" id="preview-image-point" class="img-thumbnail"
-                                width="500">
+                            <img src="" alt="" id="preview-image-point" class="img-thumbnail" width="500">
                         </div>
 
                     </div>
@@ -81,8 +83,6 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-
-        /* Digitize Function ==== ACARA 4 PGWL*/
         var drawnItems = new L.FeatureGroup();
         map.addLayer(drawnItems);
 
@@ -96,39 +96,29 @@
         });
         map.addControl(drawControl);
 
-
         map.on('draw:edited', function(e) {
             var layers = e.layers;
 
             layers.eachLayer(function(layer) {
                 var drawnJSONObject = layer.toGeoJSON();
-                console.log(drawnJSONObject);
-
                 var objectGeometry = Terraformer.geojsonToWKT(drawnJSONObject.geometry);
-                console.log(objectGeometry);
-
-                // layer properties
                 var properties = drawnJSONObject.properties;
-                console.log(properties);
 
                 drawnItems.addLayer(layer);
 
-                //menampilkan data ke dalam modal
+                // Tampilkan data di modal
+                $('#point-id').val(properties.id); // Tambahan ID
                 $('#name').val(properties.name);
                 $('#description').val(properties.description);
                 $('#geom_point').val(objectGeometry);
                 $('#preview-image-point').attr('src', "{{ asset('storage/images') }}/" + properties.image);
 
-                //menampilkan modal edit
                 $('#editpointModal').modal('show');
             });
         });
 
-        // GeoJSON Points -- PGWEBL ACARA 6
         var point = L.geoJson(null, {
             onEachFeature: function(feature, layer) {
-
-                //memasukkan layer point ke dalam drawnItems
                 drawnItems.addLayer(layer);
 
                 var properties = feature.properties;
@@ -136,19 +126,19 @@
 
                 layer.on({
                     click: function(e) {
-                        //menampilkan data ke dalam modal
+                        // Tampilkan data di modal
+                        $('#point-id').val(properties.id); // Tambahan ID
                         $('#name').val(properties.name);
                         $('#description').val(properties.description);
                         $('#geom_point').val(objectGeometry);
-                        $('#preview-image-point').attr('src', "{{ asset('storage/images') }}/" +
-                            properties.image);
+                        $('#preview-image-point').attr('src', "{{ asset('storage/images') }}/" + properties.image);
 
-                        //menampilkan modal edit
                         $('#editpointModal').modal('show');
                     },
                 });
             },
         });
+
         $.getJSON("{{ route('api.point', $id) }}", function(data) {
             point.addData(data);
             map.addLayer(point);
